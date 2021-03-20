@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ name }}</title>
+    <title>Tag List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% load static %}
     <link rel="stylesheet" href="{% static 'activism_finder/bootstrap.min.css' %}">
     <script src="{% static 'activism_finder/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'activism_finder/bootstrap.bundle.min.js' %}"></script>
-    <style>
-        #taglist .tag {
-            text-transform: uppercase;
-            margin-left: 10px;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -28,15 +22,25 @@
         <a class="nav-link" href="/tags">Tags <span class="sr-only">(current)</span></a>
     </div>
 </nav>
-<div class="content" style="padding: 1%">
-    <h2 class="text-center">{{ name }}</h2>
-    <p>Official Website: <a href="{{ website }}">{{ website }}</a></p>
-    <blockquote>
-        {{ description }}
-    </blockquote>
-    <div style="display: flex" id="taglist"><span class="align-middle">Tags: </span>{% for tag in tags %}
-        <a class="tag btn btn-outline-dark" href="/tag/{{ tag.word_url }}">{{ tag.word }}</a>
-    {% endfor %}
+<div class="content" style="padding-top: 2%">
+    <h2 class="text-center">Tag List</h2>
+    <div style="padding: 1%;">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th># of Organizations</th>
+            </tr>
+            </thead>
+            <tbody id="search-body">
+            {% for word, num_sources, word_url in keywords %}
+                <tr>
+                    <td><a href="/tag/{{ word_url }}" style="text-transform: capitalize">{{ word }}</a></td>
+                    <td>{{ num_sources }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
